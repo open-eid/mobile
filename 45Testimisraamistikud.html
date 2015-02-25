@@ -1,0 +1,87 @@
+﻿<html>
+	
+<head>
+	<title>4.5. Testimisraamistikud</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.7.1.684">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "eID.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("45Testimisraamistikud");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">4.5. Testimisraamistikud</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="4Tehnilineanaluus.html">4. Tehniline anal&uuml;&uuml;s</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="4Tehnilineanaluus.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="44Arenduskeskkondadekaardistus.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="451Testimisstrateegiad.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps10"><span class="rvts20">Mobiilsete lahenduste testimine on rohkemaid väljakutseid pakkuv kui klassikaliste (nt klient-server, veebilahendused) rakenduste testimine. Igasuguse rakenduse testimise eesmärk on mõista ja parendada rakenduse võimekuste kvaliteeti ja jõudlust</span><a class="rvts31" href="45Testimisraamistikud.html#ref_027">27</a><span class="rvts20">. Selle eesmärgi saavutamiseks mobiilsetel platvormidel tuleb aga aktsepteerida järgmisi väljakutseid:</span></p>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside;">
+<li style="text-indent: 0px" class="rvps11"><span class="rvts51">Seadmete paljusus ja mitmekesisus</span><span class="rvts22">. Vajadus soetada kriitiline hulk füüsilisi seadmeid ning valikud pidevalt ajakohastada. Rakenduste testimise keerukus sõltub ühilduvusega seotud aspektidest, kuna rakendusi on võimalik kasutada seadmetes, millel on erinevad operatsioonisüsteemid erinevate versioonidega; erinevad seadmetootjad erinevate seadmetega; erinevad sisend, väljund- ja lisaseadmed jne</span><a class="rvts40" href="45Testimisraamistikud.html#ref_028">28</a><span class="rvts22">.</span></li>
+<li style="text-indent: 0px" class="rvps11"><span class="rvts51">Testimise töövahendite olemasolu</span><span class="rvts22">. Klassikalised testimisvahendid ei ole üldjuhtumil sobilikud mobiilirakenduste testimiseks. See tähendab, et vajalik on spetsiifiliste praktikate ja vahendite järele (testide automatiseerimislahendused, pilve-testimine). Enimlevinud meetodiks on kasutada Selenium Webdriver-il põhinevaid lahendusi, mis lubavad juhtida rakenduste kasutajaliideseid üle platvormide. Siiski vajab iga platvorm testides eri käsitlemist, kuna platvormide UI spetsiifikad võivad erineda.</span></li>
+<li style="text-indent: 0px" class="rvps11"><span class="rvts51">Standardid</span><span class="rvts22">. Rakendused peavad vastama mitmetele standarditele ja nõuetele, et rakendused oleksid levitajate jaoks aktsepteeritavad ning kasutajate hulgas populaarsed.</span></li>
+<li style="text-indent: 0px" class="rvps11"><span class="rvts51">Kvaliteedimeeskonna oskused ja teadmised.</span><span class="rvts22"> Mobiilsete rakenduste testimise teistsugused rõhuasetused vajavad lisa ressurssi ja kompetentsi, täiendavaid teadmisi ja pidevat enesetäiendamist, kohanemist kiirelt muutuva valdkonnaga. Näiteks vajab rakenduse kasutatavuse kontrollimine iga mobiili platvormi UI mustrite tundmist, mis on pidevas elavas arengus. Samuti on oluline testida mobiili platvormidele omaseid juhtumeid nagu side kadumine suvalisel hetkel, sissetuleva kõne vastuvõtmine kriitiliste operatsioonide ajal, rakenduse käitumine seadme </span><span class="rvts23">landscape</span><span class="rvts22">/</span><span class="rvts23">portrait</span><span class="rvts22"> asendites</span><a class="rvts40" href="45Testimisraamistikud.html#ref_029">29</a><span class="rvts22"> jne.</span></li>
+</ul>
+<p class="rvps2"><span class="rvts36"><br/></span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<p class="rvps12"><a name="ref_027"></a>
+<span class="rvts27">[27] Best Practices in Mobile Application Testing. M. Kumar, M. Chauhan [</span><a class="rvts28" href="http://www.infosys.com/flypp/resources/Documents/mobile-application-testing.pdf">URL</a><span class="rvts27">]</span></p>
+<p class="rvps12"><a name="ref_028"></a>
+<span class="rvts27">[28] Android platvormil põhinevate nutiseadmete fragmentatsiooni hea ülevaate annab OpenSignal 2013. aastal läbi viidud uuring [</span><a class="rvts28" href="file:///C:%5CUsers%5CJan%5CGoogle%20Drive%5CDigiDoc%20Anal%C3%BC%C3%BCs%5Confluence.fm.sise%5C">URL</a><span class="rvts27">]. Lisaks erinevatele seadmetele (2013. aastal pea 12000 erinevat) on nutiseadmete puhul erinevusteks platvormide paljusus, tootjate/toodete paljususest tulenevad erisused (funktsionaalsused, ekraaniparameetrid jne). Kõik see mõjutab testimiste keerukust.</span></p>
+<p class="rvps12"><a name="ref_029"></a>
+<span class="rvts27">[29] Erinevatel platvormidel on turul hulgaliselt erinevaid seadmeid, mille puhul üheks suurimaks erinevuseks on nende ekraaniparameetrite erinevused (suurus, punktitihedus jne). Nende hea ülevaate leiab aadressilt: </span><a class="rvts28" href="http://screensiz.es/">http://screensiz.es/</a><span class="rvts27">.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Elektroonilise identiteedi (eID) tarkvara laiendamine mobiilsetele platvormidele, v1.0. Sertifitseerimiskeskus AS, Finestmedia AS, Applaud O&Uuml; (2014-2015)</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,475 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>eID- Table of Contents</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.7.1.684">
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#tabs .ui-widget-header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.dynatree.min.js"></script>
+	<script type="text/javascript" src="js/hndjsse.js"></script>
+	<script type="text/javascript">
+	
+		window.bSearchDataLoaded = false;
+		var sHelpIdToActivate = '';
+	
+		$(document).ready(function()
+		{
+			var sAnchorName = '';
+			try { sAnchorName = top.location.href.substring(top.location.href.lastIndexOf("#") + 1, top.location.href.length); }
+			catch(err) { sAnchorName = ''; }
+			var nSelectedTab = 0;
+			if (sAnchorName == '_index') nSelectedTab = 1
+			else if (sAnchorName == '_search') nSelectedTab = 2;			
+			$("#tabs").tabs({
+				selected: nSelectedTab,
+				select: function(event, ui) { HideKwPopup(); }
+			});
+			
+			// Toc
+			if ($("#tab-toc").length) {
+				$("#tab-toc").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#tab-keywords").length && $("#tab-keywords").dynatree && $("#tab-keywords").dynatree("getTree") && $("#tab-keywords").dynatree("getTree").activateKey)
+							$("#tab-keywords").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							window.open(node.data.href, node.data.target);
+						}
+					}
+				});
+				// Expand all nodes if required
+				$("#tab-toc").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				// Select the active help id
+				if (sHelpIdToActivate != '') $("#tab-toc").dynatree("getTree").activateKey(sHelpIdToActivate);
+			}
+			
+			// Keywords
+			
+			if ($("#tab-keywords").length) {
+				$("#tab-keywords").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onClick: function(node, event){
+						HideKwPopup();
+						if (node.data && node.data.click)
+						{
+							var aRefList = null;
+							eval('aRefList=' + node.data.click);
+							if (ShowKwPopup(node.li, aRefList))
+							{
+								if ($("#tab-toc") && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").activateKey)
+									$("#tab-toc").dynatree("getTree").activateKey(null);
+								if(node.data.href && node.data.href != '#'){
+									window.open(node.data.href, node.data.target);
+								}
+							}
+						}
+					}
+				});
+				// Expand all nodes if required
+				$("#tab-keywords").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				}
+			
+			// Load search data
+			(function() {
+				var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+				se.src = 'js/hndsd.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+			})();
+		});
+		
+		$('body').click(function() {
+			HideKwPopup();
+		});
+		
+		function SelectTocItem(sHelpId)
+		{
+			if ($("#tab-toc").length && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").getNodeByKey) {
+				$("#tab-toc").dynatree("getTree").getNodeByKey(sHelpId).activateSilently();
+			}
+			else {
+				sHelpIdToActivate = sHelpId;
+			}
+		}
+		
+		function HideKwPopup()
+		{
+			if($("#popupMenu")) $("#popupMenu").remove();
+		}
+		
+		function ShowKwPopup(oSender, aLinks)
+		{
+			HideKwPopup();
+			if (!aLinks || !aLinks.length || aLinks.length == 0) return false
+			else if (aLinks.length == 1) return true
+			else
+			{
+				var oParentDiv = document.createElement("DIV");
+				oParentDiv.id = "popupMenu";
+				var oLink = null;
+				// Close button
+				oLink = document.createElement("SPAN");
+				oLink.className = "close-button";
+				oLink.innerHTML = "X";
+				oLink.href = "#";
+				oLink.onclick = HideKwPopup;
+				oParentDiv.appendChild(oLink);
+				// Items
+				for (var nCnt=0; nCnt<aLinks.length; nCnt++)
+				{
+					oLink = document.createElement("A");
+					oLink.innerHTML = aLinks[nCnt][0];
+					oLink.href = aLinks[nCnt][1];
+					oLink.target = "FrameMain";
+					oLink.onclick = HideKwPopup;
+					oParentDiv.appendChild(oLink);
+				}
+				document.body.appendChild(oParentDiv);
+				var pos = $(oSender).offset(); 
+				var height = $(oSender).height();
+				$(oParentDiv).css({
+					"left": (pos.left+20) + "px",
+					"top": (pos.top + height + 5) + "px"
+				});
+				$(oParentDiv).show();
+				return false;
+			}
+		}
+		
+		function PerformSearch()
+		{
+			if (!window.bSearchDataLoaded) {
+				$("#search_results").html("Search engine data hasn't been fully loaded yet or an error occurred while loading it. This usually happens when documentation is browsed locally.");
+				return;
+			}
+			sValue = $("#search_value").val();
+			$("#search_results").html('Searching...');
+			var oSearchEngine = new HndJsSe;
+			oSearchEngine.ParseInput(sValue);			
+			oSearchEngine.PerformSearch();
+			if (!oSearchEngine.aResults || !oSearchEngine.aResults.length)
+			{
+				$("#search_results").html('No results found.');
+			}
+			else
+			{
+				$("#search_results").html('<div id="search_results_content"></div>');
+				var oUl = $("#search_results_content").append("<ul id='lr'></ul>").find("ul");
+				for (var nCnt = 0; nCnt < oSearchEngine.aResults.length; nCnt++)
+				{
+					if (oSearchEngine.aResults[nCnt][0] < aTl.length)
+					{
+						oUl.append("<li><a href='" + aTl[oSearchEngine.aResults[nCnt][0]][0] + "?search=" + escape(sValue) + "' target='FrameMain'>" + unescape(aTl[oSearchEngine.aResults[nCnt][0]][1]) + "</a></li>");
+					}
+				}
+				// Tree
+				$("#search_results_content").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#search_results_content") && $("#search_results_content").dynatree && $("#search_results_content").dynatree("getTree") && $("#search_results_content").dynatree("getTree").activateKey)
+							$("#search_results_content").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							window.open(node.data.href, node.data.target);
+						}
+					}
+				});
+			}
+		}
+	</script>
+</head>
+
+<body>
+
+	<div id="tabs">
+		<ul>
+			<li><a href="#tab-toc">Contents</a></li>
+			<li><a href="#tab-search">Search</a></li>
+			</ul>
+		<div id="tab-toc">
+			<ul id="toc" class="">
+
+				<li class="" id="eID1" data="icon: '10.png'">
+							<a
+							href="eID1.html"
+							target="FrameMain">
+								eID</a>
+
+				</li><li class="" id="Kasutatudmoistedjaluhendid" data="icon: '10.png'">
+							<a
+							href="Kasutatudmoistedjaluhendid.html"
+							target="FrameMain">
+								Kasutatud m&otilde;isted ja l&uuml;hendid</a>
+
+				</li><li class="" id="1Sissejuhatus" data="icon: '10.png'">
+							<a
+							href="1Sissejuhatus.html"
+							target="FrameMain">
+								1. Sissejuhatus</a>
+
+				</li><li class="folder" id="2Positsioneerimine" data="">
+							<a
+							href="#" onclick="return false;"
+							target="FrameMain">
+								2. Positsioneerimine</a>
+
+				<ul><li class="" id="21Arilineeesmark" data="icon: '10.png'">
+							<a
+							href="21Arilineeesmark.html"
+							target="FrameMain">
+								2.1. &Auml;riline eesm&auml;rk</a>
+
+				</li><li class="" id="22Probleemipustitus" data="icon: '10.png'">
+							<a
+							href="22Probleemipustitus.html"
+							target="FrameMain">
+								2.2. Probleemi p&uuml;stitus</a>
+
+				</li><li class="" id="23Tulemusekirjeldus" data="icon: '10.png'">
+							<a
+							href="23Tulemusekirjeldus.html"
+							target="FrameMain">
+								2.3. Tulemuse kirjeldus</a>
+
+				</li></ul></li><li class="folder" id="3Mobiilivaldkonnaulevaade" data="">
+							<a
+							href="3Mobiilivaldkonnaulevaade.html"
+							target="FrameMain">
+								3. Mobiilivaldkonna &uuml;levaade</a>
+
+				<ul><li class="" id="31Tehnoloogiajaplatvormideulevaa" data="icon: '10.png'">
+							<a
+							href="31Tehnoloogiajaplatvormideulevaa.html"
+							target="FrameMain">
+								3.1. Tehnoloogia ja platvormide &uuml;levaade</a>
+
+				</li><li class="" id="32Levituskanaliteulevaade" data="icon: '10.png'">
+							<a
+							href="32Levituskanaliteulevaade.html"
+							target="FrameMain">
+								3.2. Levituskanalite &uuml;levaade</a>
+
+				</li><li class="" id="33Rakendustekaardistus" data="icon: '10.png'">
+							<a
+							href="33Rakendustekaardistus.html"
+							target="FrameMain">
+								3.3. Rakenduste kaardistus</a>
+
+				</li><li class="" id="34Arendusmudelivalikud" data="icon: '10.png'">
+							<a
+							href="34Arendusmudelivalikud.html"
+							target="FrameMain">
+								3.4. Arendusmudeli valikud</a>
+
+				</li></ul></li><li class="folder" id="4Tehnilineanaluus" data="">
+							<a
+							href="4Tehnilineanaluus.html"
+							target="FrameMain">
+								4. Tehniline anal&uuml;&uuml;s</a>
+
+				<ul><li class="" id="41Allkirjastamisvormingud" data="icon: '10.png'">
+							<a
+							href="41Allkirjastamisvormingud.html"
+							target="FrameMain">
+								4.1. Allkirjastamisvormingud</a>
+
+				</li><li class="" id="42Toetatudtehnoloogiatekaardistu" data="icon: '10.png'">
+							<a
+							href="42Toetatudtehnoloogiatekaardistu.html"
+							target="FrameMain">
+								4.2. Toetatud tehnoloogiate kaardistus</a>
+
+				</li><li class="folder" id="43Tehniliserealisatsiooniarhitek" data="">
+							<a
+							href="43Tehniliserealisatsiooniarhitek.html"
+							target="FrameMain">
+								4.3. Tehnilise realisatsiooni arhitektuur ja kirjeldus</a>
+
+				<ul><li class="folder" id="431Autentiminejaallkirjastaminev" data="">
+							<a
+							href="431Autentiminejaallkirjastaminev.html"
+							target="FrameMain">
+								4.3.1. Autentimine ja allkirjastamine veebilehitsejas</a>
+
+				<ul><li class="" id="4311UuepolvkonnaeIDkiipkaartTrub" data="icon: '10.png'">
+							<a
+							href="4311UuepolvkonnaeIDkiipkaartTrub.html"
+							target="FrameMain">
+								4.3.1.1. Uue p&otilde;lvkonna eID kiipkaart Tr&uuml;b Baltic pilootprojekti n&auml;itel</a>
+
+				</li></ul></li><li class="folder" id="432Nutiseadmesallkirjastamine" data="">
+							<a
+							href="432Nutiseadmesallkirjastamine.html"
+							target="FrameMain">
+								4.3.2. Nutiseadmes allkirjastamine</a>
+
+				<ul><li class="" id="4321OlemasolevadEestimobiilIDpoh" data="icon: '10.png'">
+							<a
+							href="4321OlemasolevadEestimobiilIDpoh.html"
+							target="FrameMain">
+								4.3.2.1. Olemasolevad Eesti mobiil-ID p&otilde;hised allkirjastamise rakendused nutiseadmetes</a>
+
+				</li></ul></li><li class="" id="433Alternatiividearendusmahuvord" data="icon: '10.png'">
+							<a
+							href="433Alternatiividearendusmahuvord.html"
+							target="FrameMain">
+								4.3.3. Alternatiivide arendusmahu v&otilde;rdlus</a>
+
+				</li><li class="" id="434Kolmandateleosapooltelepakuta" data="icon: '10.png'">
+							<a
+							href="434Kolmandateleosapooltelepakuta.html"
+							target="FrameMain">
+								4.3.4. Kolmandatele osapooltele pakutavad arenduvahendid</a>
+
+				</li></ul></li><li class="" id="44Arenduskeskkondadekaardistus" data="icon: '10.png'">
+							<a
+							href="44Arenduskeskkondadekaardistus.html"
+							target="FrameMain">
+								4.4. Arenduskeskkondade kaardistus</a>
+
+				</li><li class="folder" id="45Testimisraamistikud" data="">
+							<a
+							href="45Testimisraamistikud.html"
+							target="FrameMain">
+								4.5. Testimisraamistikud</a>
+
+				<ul><li class="" id="451Testimisstrateegiad" data="icon: '10.png'">
+							<a
+							href="451Testimisstrateegiad.html"
+							target="FrameMain">
+								4.5.1. Testimisstrateegiad</a>
+
+				</li></ul></li></ul></li><li class="" id="5Turvaanaluus" data="icon: '10.png'">
+							<a
+							href="5Turvaanaluus.html"
+							target="FrameMain">
+								5. Turvaanal&uuml;&uuml;s</a>
+
+				</li><li class="" id="6Arendusprotsessikirjeldus" data="icon: '10.png'">
+							<a
+							href="6Arendusprotsessikirjeldus.html"
+							target="FrameMain">
+								6. Arendusprotsessi kirjeldus</a>
+
+				</li><li class="" id="7Kokkuvote" data="icon: '10.png'">
+							<a
+							href="7Kokkuvote.html"
+							target="FrameMain">
+								7. Kokkuv&otilde;te</a>
+
+				</li><li class="folder" id="Lisad" data="">
+							<a
+							href="#" onclick="return false;"
+							target="FrameMain">
+								Lisad</a>
+
+				<ul><li class="" id="Lisa1Elektrooniliseidentiteedika" data="icon: '10.png'">
+							<a
+							href="Lisa1Elektrooniliseidentiteedika.html"
+							target="FrameMain">
+								Lisa 1. Elektroonilise identiteedi kaardistus</a>
+
+				</li><li class="" id="Lisa2Mobiilitehnoloogiajaplatvor" data="icon: '10.png'">
+							<a
+							href="Lisa2Mobiilitehnoloogiajaplatvor.html"
+							target="FrameMain">
+								Lisa 2. Mobiilitehnoloogia ja platvormide kaardistus</a>
+
+				</li><li class="" id="Lisa3Nutiseadmetekaardistuspopul" data="icon: '10.png'">
+							<a
+							href="Lisa3Nutiseadmetekaardistuspopul.html"
+							target="FrameMain">
+								Lisa 3. Nutiseadmete kaardistus (populaarseimad 2014. aastal)</a>
+
+				</li><li class="" id="Lisa4GoogleChromeOSChromeBookule" data="icon: '10.png'">
+							<a
+							href="Lisa4GoogleChromeOSChromeBookule.html"
+							target="FrameMain">
+								Lisa 4. Google Chrome OS (ChromeBook) &uuml;levaade</a>
+
+				</li><li class="" id="Lisa5Levituskanalitekaardistus" data="icon: '10.png'">
+							<a
+							href="Lisa5Levituskanalitekaardistus.html"
+							target="FrameMain">
+								Lisa 5. Levituskanalite kaardistus</a>
+
+				</li><li class="" id="Lisa6Olemasolevaddigiallkirjasta" data="icon: '10.png'">
+							<a
+							href="Lisa6Olemasolevaddigiallkirjasta.html"
+							target="FrameMain">
+								Lisa 6. Olemasolevad digiallkirjastamise rakendused mobiilsetel platvormidel</a>
+
+				</li><li class="" id="Lisa7Mobiilivaldkonnaarendusmude" data="icon: '10.png'">
+							<a
+							href="Lisa7Mobiilivaldkonnaarendusmude.html"
+							target="FrameMain">
+								Lisa 7. Mobiilivaldkonna arendusmudelite kaardistus</a>
+
+				</li><li class="" id="Lisa8Platvormiulesedarendusraami" data="icon: '10.png'">
+							<a
+							href="Lisa8Platvormiulesedarendusraami.html"
+							target="FrameMain">
+								Lisa 8. Platvormi&uuml;lesed arendusraamistikud ja -vahendid</a>
+
+				</li><li class="" id="Lisa9Testimisvahenditevordlus" data="icon: '10.png'">
+							<a
+							href="Lisa9Testimisvahenditevordlus.html"
+							target="FrameMain">
+								Lisa 9. Testimisvahendite v&otilde;rdlus</a>
+
+				</li><li class="" id="Lisa10Kiipkaardilugejadmobiilise" data="icon: '10.png'">
+							<a
+							href="Lisa10Kiipkaardilugejadmobiilise.html"
+							target="FrameMain">
+								Lisa 10. Kiipkaardi lugejad mobiiliseadmetele (nutitelefonid, tahvelarvutid)</a>
+
+				</li><li class="" id="Lisa11Dokumendiskasutatudjoonise" data="icon: '10.png'">
+							<a
+							href="Lisa11Dokumendiskasutatudjoonise.html"
+							target="FrameMain">
+								Lisa 11. Dokumendis kasutatud joonised ja tabelid</a>
+
+				</li></ul></li></ul>
+		</div>
+		
+		<div id="tab-search">
+			<form onsubmit="PerformSearch(); return false;">
+				<label for="search_value">Search:</label>
+				<input id="search_value" name="search_value"></input>
+				<input type="submit" value="Search"/>
+			</form>
+			<div id="search_results"></div>
+		</div>
+		
+		</div>
+    
+</body>
+
+</html>
+

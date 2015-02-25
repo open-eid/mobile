@@ -1,0 +1,83 @@
+﻿<html>
+	
+<head>
+	<title>4.3.2. Nutiseadmes allkirjastamine</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 4.7.1.684">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "eID.html?" + sTopicUrl;
+			}
+			else if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+			{
+				top.FrameTOC.SelectTocItem("432Nutiseadmesallkirjastamine");
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">4.3.2. Nutiseadmes allkirjastamine</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="4Tehnilineanaluus.html">4. Tehniline anal&uuml;&uuml;s</a> &rsaquo;&rsaquo; <a href="43Tehniliserealisatsiooniarhitek.html">4.3. Tehnilise realisatsiooni arhitektuur ja kirjeldus</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="43Tehniliserealisatsiooniarhitek.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="4311UuepolvkonnaeIDkiipkaartTrub.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="4321OlemasolevadEestimobiilIDpoh.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps10"><span class="rvts20">Peatükis vaatleme töökoha-arvutititel eksisteeriva allkirjastamise lahenduse alternatiive mobiilsetel platvormidel (allkirjastatud dokumentide loomine, haldamine, verifitseerimine). Lähtume eelnevas peatükis kaardistatud platvormi põhise PKCS#11 taristu kasutamisest ning võrdleme erinevaid võimalike rakendusarhitektuure.</span></p>
+<p class="rvps10"><span class="rvts20">Esimene võimalik rakendusarhitektuur (</span><a class="rvts32" href="432Nutiseadmesallkirjastamine.html#Joonis4">vt joonis 4, alternatiiv A</a><span class="rvts20">) baseerub eelmises peatükis kirjeldatud eID veebilehitsejal. Autentimist ning signeerimist pakkuv veebilehitseja pakendatakse koos HTML5 tehnoloogiatel ehitatud allkirjastamise veebirakendusega poodidest laetavaks paketiks. Kõikide failidega tehtavate operatsioonide eest nagu konteinerite loomine, failide lisamine ja m-ID allkirjastamine vastutab JavaScript rakendus, mis kasutab veebilehitsejas saadaval olevaid </span><span class="rvts21">native</span><span class="rvts20"> mooduleid ID-kaardiga allkirjastamiseks. Selle lähenemise eeliseks on suhteliselt lihtsam hallatavus ning koodi jagamine üle platvormide, kahjuks räägivad aga HTMLis realiseeritud kasutajaliideste kasutajakogemuse mitte vastamine platvormide standarditele, JavaScript keskkonna kiirus ning allkirjastatud failide käsitlemiseks mõeldud teekide puudumine. Alternatiivi puhul toimib ainult dokumentide allkirjastamine, failide hoidmist antud alternatiiv ei sisalda.</span></p>
+<p class="rvps10"><span class="rvts20">Teiseks valikuks on kohtrakendus, mis hõlmab endas õhukest kihti allkirjastatud failide metaandmete ning manuste lugemiseks, kuid kasutab allkirjastamiseks ning verifitseerimiseks DigiDocService teenust (</span><a class="rvts32" href="432Nutiseadmesallkirjastamine.html#Joonis4">vt joonis 4, alternatiiv B</a><span class="rvts20">). Selle lähenemise eeliseks on võrdlemisi õhuke kiht failide lugemiseks, mida on lihtsusest tulenevalt efektiivne laiendada erinevatele platvormidele. Puuduseks aga pideva interneti ühenduse vajadus ka klassikaliselt </span><span class="rvts21">offline</span><span class="rvts20"> (nt verifitseerimine) tegevuste jaoks ning otsene sõltuvus ühest teenusepakkujast.</span></p>
+<p class="rvps10"><span class="rvts20">Kolmandaks valikuks on kohtrakendus, mis kasutab vastavalt platvormile </span><span class="rvts21">libdigidocpp</span><span class="rvts20"> või </span><span class="rvts21">digidoc4j</span><span class="rvts20"> teeke ning sooritab kõik operatsioonid (v.a. m-ID signeerimine, OCSP, ajatempli küsimine) kohalikult (</span><a class="rvts32" href="432Nutiseadmesallkirjastamine.html#Joonis4">vt joonis 4, alternatiiv C</a><span class="rvts20">). Lahenduse eelduseks on mobiilsete platvormide toe olemasolu vastavates teekides</span><a class="rvts31" href="432Nutiseadmesallkirjastamine.html#ref_026">26</a><span class="rvts20">. Selle lähenemise eelisteks on kiirus ning </span><span class="rvts21">offline</span><span class="rvts20"> tugi.</span></p>
+<p class="rvps4"><img width="619" height="525" alt="" style="padding : 1px;" src="lib/Joonis4.png"></p>
+<p class="rvps42"><span class="rvts33">Joonis </span><span class="rvts33">4</span><a name="Joonis4"></a>
+<span class="rvts33">. Alternatiivsed lahendussuunad allkirjastamiseks</span></p>
+<p class="rvps10"><span class="rvts20">Kohtrakendustes, olgu need siis DigiDoc klienttarkvara või integraatorite loodavad lahendused, on minimaalse funktsionaalsuse tagamiseks tarvilikud iOS, Android ja WM platvormi põhised draiverid. Jätkusuutliku arenduse tagamiseks on tarvilik pakkuda ka allkirjafailide haldamiseks teeke analoogselt töökoha-arvutite</span><span class="rvts36"> </span><span class="rvts20">platvormidele.</span></p>
+<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
+<p class="rvps38"><a name="ref_026"></a>
+<span class="rvts36">[26] </span><span class="rvts48">iOS</span><span class="rvts36"> jaoks on võimalik edukalt portida </span><span class="rvts37">libdigidoc</span><span class="rvts36"> ning </span><span class="rvts37">libdigidocpp</span><span class="rvts36">. Põhilist tähelepanu vajavad ARM protsessori arhitektuuri tugi, iOS </span><span class="rvts37">toolchain</span><span class="rvts36"> tugi ning sertifikaatide käsitlemine. Niimoodi toimib tänane Finestmedia AS-i iOS DigiDoc app. </span><span class="rvts48">Androidi</span><span class="rvts36"> jaoks on võimalik portida </span><span class="rvts37">digidoc4j</span><span class="rvts36"> või </span><span class="rvts37">libidigidocpp</span><span class="rvts36"> teegid. Põhilist tähelepanu vajavad tänaseks deprekeeritud jDigiDoc teegi kogemuste põhjal BouncyCastle asendamine SpongyCastle teegiga ning mälukasutuse optimeerimine allkirjafailide puhul. Niimoodi toimib tänane Finestmedia AS-i Android DigiDoc rakendus. </span><span class="rvts48">Windows Mobile</span><span class="rvts36"> puhul puudub hetkel seadme keskkonda sobiv täisväärtuslik .NET teek (teadaolevalt on AgileWorks OÜ sõltumatult uurimas võimalusi selle loomiseks). Üheks võimalikuks lahenduseks on eksisteeriva </span><span class="rvts37">libdigidocpp</span><span class="rvts36"> kasutamine läbi .ddl-iks kompileerimise, kuid seni teadaolevad katsetused sellist lahendust saavutada on ebaõnnestunud </span><span class="rvts37">libdigidocpp</span><span class="rvts36"> poolt kasutatavate teekide tõttu.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Elektroonilise identiteedi (eID) tarkvara laiendamine mobiilsetele platvormidele, v1.0. Sertifitseerimiskeskus AS, Finestmedia AS, Applaud O&Uuml; (2014-2015)</div>
+		</div>
+	</body>
+	
+</html>
+
